@@ -82,17 +82,17 @@ public class PlayerMovement : MonoBehaviour
             final += Input.GetAxisRaw("Horizontal") * transform.right * acceleration;
         }
 
-        // Unused air control code.
+        //air control code.
 
-        // else if ((final.magnitude <= maxAirVelocity) && airTime > 0)
-        // {
-        //     final += Input.GetAxis("Vertical") * transform.forward * (airAccel * airTime + 1);
-        //     final += Input.GetAxis("Horizontal") * transform.right * (airAccel * airTime );    
-        // }
+         else if ((final.magnitude <= maxAirVelocity) && airTime > 0)
+        {
+            final += Input.GetAxis("Vertical") * transform.forward * (airAccel * airTime + 1);
+            final += Input.GetAxis("Horizontal") * transform.right * (airAccel * airTime);
+        }
 
-        // airTime -= Time.deltaTime;
+        airTime -= Time.deltaTime;
 
-        
+
         final += Vector3.down * gravityMult * Time.deltaTime; //Add extra gravity (multiply the "down" direction by gravity multiplier)
         rigidbody.velocity = final;                           //Set the velocity to the processed output.
 
@@ -108,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {   //If one of the above isn't true, check if the ground is actually below the player.
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.3f))
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.1f))
             {
                 if (hit.collider.enabled){
                     isGrounded = true;
