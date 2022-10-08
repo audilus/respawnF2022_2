@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnGUI()
     {
         GUI.Label(new Rect(25, 25, 300, 30), "Player Velocity: " + rigidbody.velocity.ToString());
+        GUI.Label(new Rect(25, 50, 300, 30), "Player Position: " + transform.position.ToString());
     }
 
 
