@@ -18,6 +18,9 @@ public class Activator : MonoBehaviour
 
 
     private Holdable holdable = null;
+
+    public float triggerInteractDistance = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -132,15 +135,15 @@ public class Activator : MonoBehaviour
 
         if (Input.GetButtonDown("Use") && interactionClock <= 0)
         {
-            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, grabDist))
+            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, triggerInteractDistance))
             {
                 if (hit.collider.isTrigger)
                 {
+                    //if (hit.collider.GetComponent<Interactable>())
                     hit.collider.SendMessageUpwards("Use"); //TODO: Triggers
                 }
-
             }
-
+            interactionClock = interactionCooldownTime;
         }
 
         grabCooldownClock -= Time.deltaTime;
