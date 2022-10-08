@@ -93,8 +93,9 @@ public class PlayerMovement : MonoBehaviour
 
         airTime -= Time.deltaTime;
 
+        if(!isGrounded)
+            final += Vector3.down * gravityMult * Time.deltaTime; //Add extra gravity (multiply the "down" direction by gravity multiplier)
 
-        final += Vector3.down * gravityMult * Time.deltaTime; //Add extra gravity (multiply the "down" direction by gravity multiplier)
         rigidbody.velocity = final;                           //Set the velocity to the processed output.
 
         //Decrement the clock in real time by how long the previous frame took to render.
