@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {   //If one of the above isn't true, check if the ground is actually below the player.
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.1f))
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.04f))
             {
                 if (hit.collider.enabled){
                     isGrounded = true;
