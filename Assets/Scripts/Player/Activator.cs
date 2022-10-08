@@ -69,7 +69,6 @@ public class Activator : MonoBehaviour
 
             Vector3 x = transform.position + transform.forward * grabDist;
             Rigidbody rb = holdable.GetComponent<Rigidbody>();
-
             //holdable.transform.position = Vector3.Slerp(holdable.transform.position, transform.position + transform.forward * grabDist, Time.deltaTime * grabStrength);
             if (Physics.Raycast(transform.position, transform.forward * grabDist, out RaycastHit hit, grabDist))
             {
@@ -122,6 +121,9 @@ public class Activator : MonoBehaviour
                 if (hit.collider.tag == "Prop")
                 {
                     Holdable p = hit.collider.GetComponent<Holdable>();
+                    Rigidbody rb = p.GetComponent<Rigidbody>();
+
+                    rb.interpolation = RigidbodyInterpolation.None;
 
                     holdable = p;
                     holdable.gameObject.layer = 2;
