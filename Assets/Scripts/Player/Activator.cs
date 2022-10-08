@@ -17,7 +17,7 @@ public class Activator : MonoBehaviour
 
 
 
-    private Holdable holdable = null;
+    private Interactable interactable = null;
 
     public float triggerInteractDistance = 2f;
 
@@ -29,9 +29,9 @@ public class Activator : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (showDebug && holdable != null)
+        if (showDebug && interactable != null)
         {
-            Gizmos.DrawSphere(holdable.gameObject.transform.position, 0.2f);
+            Gizmos.DrawSphere(interactable.gameObject.transform.position, 0.2f);
         }
 
         if (showDebug)
@@ -53,22 +53,22 @@ public class Activator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (holdable != null)
+        if (interactable != null)
         {
 
-            var _dir = (transform.position - holdable.transform.position).normalized;
+            var _dir = (transform.position - interactable.transform.position).normalized;
             
             if (showDebug)
             {
-                Debug.DrawLine(holdable.transform.position, holdable.transform.position + holdable.uprightVector, Color.green);
-                Debug.DrawLine(holdable.transform.position, holdable.transform.position + _dir, Color.red);
+                Debug.DrawLine(interactable.transform.position, interactable.transform.position + Vector3.up, Color.green);
+                Debug.DrawLine(interactable.transform.position, interactable.transform.position + _dir, Color.red);
             }
 
 
-            holdable.transform.eulerAngles = new Vector3(_dir.x, 1, _dir.z);
+            interactable.transform.eulerAngles = new Vector3(_dir.x, 1, _dir.z);
 
             Vector3 x = transform.position + transform.forward * grabDist;
-            Rigidbody rb = holdable.GetComponent<Rigidbody>();
+            Rigidbody rb = interactable.GetComponent<Rigidbody>();
             //holdable.transform.position = Vector3.Slerp(holdable.transform.position, transform.position + transform.forward * grabDist, Time.deltaTime * grabStrength);
             if (Physics.Raycast(transform.position, transform.forward * grabDist, out RaycastHit hit, grabDist))
             {
@@ -80,35 +80,37 @@ public class Activator : MonoBehaviour
 
             if (rb != null)
             {
-                holdable.GetComponent<Rigidbody>().useGravity = false;
-                holdable.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Continuous;
-                holdable.GetComponent<Rigidbody>().MovePosition(Vector3.Slerp(holdable.transform.position, x, Time.deltaTime * grabStrength));
+                interactable.GetComponent<Rigidbody>().useGravity = false;
+                interactable.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Continuous;
+                interactable.GetComponent<Rigidbody>().MovePosition(Vector3.Slerp(interactable.transform.position, x, Time.deltaTime * grabStrength));
             }
             else
             {
-                holdable.transform.position = Vector3.Slerp(holdable.transform.position, x, Time.deltaTime * grabStrength);
+                interactable.transform.position = Vector3.Slerp(interactable.transform.position, x, Time.deltaTime * grabStrength);
             }
         }
         if (Input.GetButtonDown("Fire1") && grabCooldownClock <= 0)
         {
-            if (holdable != null)
+            if (interactable != null)
             {
-                Rigidbody rb = holdable.GetComponent<Rigidbody>();
+                Rigidbody rb = interactable.GetComponent<Rigidbody>();
                 rb.useGravity = true;
                 rb.velocity = transform.forward * 10f;
-                holdable.gameObject.layer = 0;
-                holdable = null;
+                interactable.gameObject.layer = 0;
+                interactable = null;
             }
         }
         if (Input.GetButtonDown("Use") && grabCooldownClock <= 0)
         {
-            if (holdable != null)
+            if (interactable != null)
             {
-                Rigidbody rb = holdable.GetComponent<Rigidbody>();
+                Rigidbody rb = interactable.GetComponent<Rigidbody>();
                 rb.useGravity = true;
                 rb.velocity = transform.parent.GetComponent<Rigidbody>().velocity;
-                holdable.gameObject.layer = 0;
-                holdable = null;
+                interactable.gameObject.layer = 0;
+                interactable.SendMessage("UnUse");
+                interactable = null;
+
             }
             else if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, grabDist))
             {
@@ -120,13 +122,13 @@ public class Activator : MonoBehaviour
 
                 if (hit.collider.tag == "Prop")
                 {
-                    Holdable p = hit.collider.GetComponent<Holdable>();
+                    Interactable p = hit.collider.GetComponent<Interactable>();
                     Rigidbody rb = p.GetComponent<Rigidbody>();
 
                     rb.interpolation = RigidbodyInterpolation.None;
 
-                    holdable = p;
-                    holdable.gameObject.layer = 2;
+                    interactable = p;
+                    interactable.gameObject.layer = 2;
 
                 }
                 

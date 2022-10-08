@@ -21,4 +21,9 @@ public class Interactable : MonoBehaviour
         // Template; implement in inherited classes
         Debug.Log("Interactable: (" + this.name + ") used! ");
     }
+
+    protected void UnUse()
+    {
+        Debug.Log("Not using " + this.name + " anymore.");
+    }
 }

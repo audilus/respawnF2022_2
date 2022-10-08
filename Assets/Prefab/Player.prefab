@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 37692835342223296}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,9 +160,10 @@ GameObject:
   - component: {fileID: 37692835609561220}
   - component: {fileID: 37692835609561219}
   - component: {fileID: 37692835609561218}
+  - component: {fileID: 1862501467}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -213,7 +214,7 @@ MonoBehaviour:
   acceleration: 3
   maxFloorVelocity: 3
   maxAirVelocity: 1
-  floorVelocityDampening: 0.4
+  floorVelocityDampening: 0.8
   jumpPower: 10
   gravityMult: 40
   airAccel: 0.9
@@ -221,6 +222,14 @@ MonoBehaviour:
   jumpSecondDelay: 0.2
   shakeAmt: 0
   shakeThreshold: 25
+--- !u!81 &1862501467
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37692835609561217}
+  m_Enabled: 1
 --- !u!1 &37692835744834360
 GameObject:
   m_ObjectHideFlags: 0
