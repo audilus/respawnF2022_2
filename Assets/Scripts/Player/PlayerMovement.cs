@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
         if (rigidbody == null)
         {
             rigidbody = gameObject.AddComponent<Rigidbody>();
+            rigidbody.interpolation = RigidbodyInterpolation.Extrapolate;
         }
         Cursor.visible = false;
         //cameraShake = GetComponentInChildren<CameraShake>();
