@@ -125,6 +125,5 @@ public class PlayerMovement : MonoBehaviour
                 isGrounded = false;
             }
         }
-        Debug.Log(isGrounded);
     }
 }
